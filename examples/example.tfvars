@@ -1,6 +1,6 @@
 public_ssh_key_path = "~/.ssh/id_rsa.pub"
 key_pair_name = "dev_key_pair"
-instance_type = "m6id.12xlarge"
+instance_type = "m5.xlarge"
 launch_config_name =  "dev_launch_config"
 asg_name = "dev_server_asg"
 cluster_name = "dev-kind-cluster"
