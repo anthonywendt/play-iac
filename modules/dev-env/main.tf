@@ -1,6 +1,6 @@
 # Define a local variable for the cluster name
 locals {
-  cluster_name = var.cluster_name
+  cluster_name = "${var.user}-dev-kind-cluster"
 }
 
 provider "aws" {
@@ -11,7 +11,7 @@ provider "aws" {
 resource "aws_vpc" "dev_vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    Name = "dev-vpc"
+    Name = "${var.user}-dev-vpc"
   }
 }
 
@@ -25,11 +25,11 @@ resource "aws_subnet" "dev_public_subnet" {
 
   vpc_id                  = aws_vpc.dev_vpc.id
   cidr_block              = "10.0.1.0/24"
-  availability_zone       = "${var.aws_region}b"
+  availability_zone       = "${var.aws_region}${var.aws_availability_zone_letter}"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "dev-public-subnet"
+    Name = "${var.user}-dev-public-subnet"
   }
 }
 
@@ -43,7 +43,7 @@ resource "aws_route_table" "dev_public_rt" {
   }
 
   tags = {
-    Name = "dev-public-route-table"
+    Name = "${var.user}-dev-public-route-table"
   }
 }
 
@@ -55,13 +55,13 @@ resource "aws_route_table_association" "dev_public_rt_assoc" {
 
 # Create a key pair for SSH access
 resource "aws_key_pair" "my_key_pair" {
-  key_name   = var.key_pair_name
+  key_name   = "${var.user}-dev-key-pair"
   public_key = file("${var.public_ssh_key_path}")
 }
 
 # Create a security group to allow all access
 resource "aws_security_group" "allow_all" {
-  name        = "allow_all"
+  name_prefix        = "allow_all"
   description = "Allow all incoming traffic"
   vpc_id = aws_vpc.dev_vpc.id
 
@@ -99,7 +99,7 @@ resource "aws_security_group" "allow_all" {
 
 # Create a Launch Configuration to define the instance settings
 resource "aws_launch_configuration" "dev_server_launch_config" {
-  name          = var.launch_config_name
+  name_prefix          = "${var.user}-dev-launch-config"
   image_id      = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
   key_name      = aws_key_pair.my_key_pair.key_name
@@ -119,7 +119,7 @@ resource "aws_launch_configuration" "dev_server_launch_config" {
 
 # Create an Auto Scaling group using the Launch Configuration
 resource "aws_autoscaling_group" "dev_server_asg" {
-  name                 = var.asg_name
+  name                 = "${var.user}-dev-asg"
   max_size             = 1
   min_size             = 0
   desired_capacity     = 1
@@ -132,7 +132,7 @@ resource "aws_autoscaling_group" "dev_server_asg" {
 
   tag {
     key                 = "Name"
-    value               = var.asg_name
+    value               = "${var.user}-dev-asg"
     propagate_at_launch = true
   }
 
