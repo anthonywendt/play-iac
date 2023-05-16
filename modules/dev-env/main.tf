@@ -132,7 +132,7 @@ resource "aws_autoscaling_group" "dev_server_asg" {
 
   tag {
     key                 = "Name"
-    value               = "${var.user}-dev-asg"
+    value               = "${var.user}-dev"
     propagate_at_launch = true
   }
 
@@ -142,8 +142,8 @@ resource "aws_autoscaling_group" "dev_server_asg" {
 }
 
 # Create a scheduled action to scale down the Auto Scaling group at midnight
-resource "aws_autoscaling_schedule" "scale_down_at_midnight" {
-  scheduled_action_name  = "scale-down-at-midnight"
+resource "aws_autoscaling_schedule" "scale_down" {
+  scheduled_action_name  = "scale-down"
   min_size               = 0
   max_size               = 1
   desired_capacity       = 0
@@ -152,8 +152,8 @@ resource "aws_autoscaling_schedule" "scale_down_at_midnight" {
   # Set this to your desired time zone
   time_zone = "UTC"
 
-  # "0 0 * * *" is a cron expression for "Every day at midnight"
-  recurrence = "0 0 * * *"
+  # "0 0 * * *" is a cron expression for "Every day at 2 UCT"
+  recurrence = "0 2 * * *"
 }
 
 output "autoscaling_group_name" {
