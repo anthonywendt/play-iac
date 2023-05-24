@@ -24,6 +24,14 @@ kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 networking:
   apiServerPort: 6443
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        max-pods: "200"
 EOF
 KUBECONFIG=/home/ubuntu/kind-cluster-kubeconfig.yaml
 kind create cluster --image kindest/node:v1.26.3 --config /home/ubuntu/kind-config.yaml --name kind-cluster --kubeconfig \$KUBECONFIG
