@@ -152,8 +152,8 @@ resource "aws_autoscaling_schedule" "scale_down" {
   # Set this to your desired time zone
   time_zone = "UTC"
 
-  # "0 0 * * *" is a cron expression for "Every day at 2 UCT"
-  recurrence = "0 2 * * *"
+  # "0 0 * * *" is a cron expression for "Every day at 6 UCT"
+  recurrence = "0 6 * * *"
 }
 
 output "autoscaling_group_name" {
