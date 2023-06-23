@@ -5,7 +5,7 @@ sudo systemctl enable docker
 sudo systemctl start docker
 sudo usermod -aG docker ubuntu
 echo "export KUBECONFIG=/home/ubuntu/cluster-kubeconfig.yaml" | sudo tee -a /home/ubuntu/.bashrc
-echo "export GPG_TTY=$(tty)" | sudo tee -a /home/ubuntu/.bashrc
+echo "export GPG_TTY=\$(tty)" | sudo tee -a /home/ubuntu/.bashrc
 sudo apt install -y jq git make wget sslscan
 sudo sysctl -w vm.max_map_count=262144
 sudo ulimit -n 65536
