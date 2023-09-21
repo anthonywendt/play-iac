@@ -13,6 +13,9 @@ sudo echo "PubkeyAcceptedKeyTypes=+ssh-rsa" >> /etc/ssh/sshd_config
 sudo service ssh reload
 sudo sysctl fs.inotify.max_user_instances=512
 sudo sysctl -p
+sudo snap install go --channel=1.21/stable --classic
+sudo curl -sL https://github.com/defenseunicorns/zarf/releases/download/v0.29.2/zarf_v0.29.2_Linux_amd64 -o /usr/local/bin/zarf
+sudo chmod +x /usr/local/bin/zarf
 newgrp docker <<EONG
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
@@ -36,7 +39,7 @@ nodes:
         max-pods: "200"
 EOF
 KUBECONFIG=/home/ubuntu/cluster-kubeconfig.yaml
-kind create cluster --image kindest/node:v1.26.3 --config /home/ubuntu/kind-config.yaml --name kind-cluster --kubeconfig \$KUBECONFIG
+# kind create cluster --image kindest/node:v1.26.3 --config /home/ubuntu/kind-config.yaml --name kind-cluster --kubeconfig \$KUBECONFIG
 sudo chown ubuntu:ubuntu \$KUBECONFIG
 export FLUX_VERSION=0.41.1
 curl -s https://fluxcd.io/install.sh | sudo bash
