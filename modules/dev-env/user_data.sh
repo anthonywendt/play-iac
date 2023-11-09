@@ -14,7 +14,7 @@ sudo service ssh reload
 sudo sysctl fs.inotify.max_user_instances=512
 sudo sysctl -p
 sudo snap install go --channel=1.21/stable --classic
-sudo curl -sL https://github.com/defenseunicorns/zarf/releases/download/v0.29.2/zarf_v0.29.2_Linux_amd64 -o /usr/local/bin/zarf
+sudo curl -sL https://github.com/defenseunicorns/zarf/releases/download/v0.30.1/zarf_v0.30.1_Linux_amd64 -o /usr/local/bin/zarf
 sudo chmod +x /usr/local/bin/zarf
 newgrp docker <<EONG
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
