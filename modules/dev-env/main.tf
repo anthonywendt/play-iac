@@ -80,6 +80,11 @@ resource "aws_instance" "dev_server" {
   tags = {
     Name = "${var.user}-dev-server"
   }
+
+  root_block_device {
+    volume_size = 200
+  }
+
 }
 
 output "dev_server_public_ip" {

@@ -4,12 +4,13 @@ sudo apt-get install -y docker.io
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo usermod -aG docker ubuntu
-echo "export KUBECONFIG=/home/ubuntu/cluster-kubeconfig.yaml" | sudo tee -a /home/ubuntu/.bashrc
+# echo "export KUBECONFIG=/home/ubuntu/cluster-kubeconfig.yaml" | sudo tee -a /home/ubuntu/.bashrc
 echo "export GPG_TTY=\$(tty)" | sudo tee -a /home/ubuntu/.bashrc
 echo "alias k=\"kubectl\"" | sudo tee -a /home/ubuntu/.bashrc
 echo "alias kmtsi-test=\"export KUBECONFIG=/home/ubuntu/mtsi-test\"" | sudo tee -a /home/ubuntu/.bashrc
 echo "alias kmtsi-dev=\"export KUBECONFIG=/home/ubuntu/mtsi-dev\"" | sudo tee -a /home/ubuntu/.bashrc
 echo "alias k-default=\"export KUBECONFIG=/home/ubuntu/cluster-kubeconfig.yaml\"" | sudo tee -a /home/ubuntu/.bashrc
+sudo "alias ng=\"newgrp docker\"" | sudo tee -a /home/ubuntu/.bashrc
 sudo apt install -y jq git make wget sslscan
 sudo sysctl -w vm.max_map_count=262144
 sudo ulimit -n 65536
@@ -18,9 +19,9 @@ sudo service ssh reload
 sudo sysctl fs.inotify.max_user_instances=512
 sudo sysctl -p
 sudo snap install go --channel=1.21/stable --classic
-sudo curl -sL https://github.com/defenseunicorns/zarf/releases/download/v0.32.5/zarf_v0.32.5_Linux_amd64 -o /usr/local/bin/zarf
-sudo chmod +x /usr/local/bin/zarf
-sudo curl -sL https://github.com/defenseunicorns/uds-cli/releases/download/v0.9.4/uds-cli_v0.9.4_Linux_amd64 -o /usr/local/bin/uds && sudo chmod +x /usr/local/bin/uds
+# sudo curl -sL https://github.com/defenseunicorns/zarf/releases/download/v0.32.5/zarf_v0.32.5_Linux_amd64 -o /usr/local/bin/zarf
+# sudo chmod +x /usr/local/bin/zarf
+sudo curl -sL https://github.com/defenseunicorns/uds-cli/releases/download/v0.11.1/uds-cli_v0.11.1_Linux_amd64 -o /usr/local/bin/uds && sudo chmod +x /usr/local/bin/uds
 sudo chmod +x /usr/local/bin/uds
 newgrp docker <<EONG
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
