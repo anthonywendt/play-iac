@@ -12,6 +12,8 @@ echo "alias kmtsi-dev=\"export KUBECONFIG=/home/ubuntu/mtsi-dev\"" | sudo tee -a
 echo "alias k-default=\"export KUBECONFIG=/home/ubuntu/cluster-kubeconfig.yaml\"" | sudo tee -a /home/ubuntu/.bashrc
 sudo "alias ng=\"newgrp docker\"" | sudo tee -a /home/ubuntu/.bashrc
 sudo apt install -y jq git make wget sslscan
+sudo wget https://github.com/mikefarah/yq/releases/download/v4.43.1/yq_linux_amd64 -O /usr/bin/yq
+sudo chmod +x /usr/bin/yq
 sudo sysctl -w vm.max_map_count=262144
 sudo ulimit -n 65536
 sudo echo "PubkeyAcceptedKeyTypes=+ssh-rsa" >> /etc/ssh/sshd_config
@@ -21,7 +23,7 @@ sudo sysctl -p
 sudo snap install go --channel=1.21/stable --classic
 # sudo curl -sL https://github.com/defenseunicorns/zarf/releases/download/v0.32.5/zarf_v0.32.5_Linux_amd64 -o /usr/local/bin/zarf
 # sudo chmod +x /usr/local/bin/zarf
-sudo curl -sL https://github.com/defenseunicorns/uds-cli/releases/download/v0.11.1/uds-cli_v0.11.1_Linux_amd64 -o /usr/local/bin/uds && sudo chmod +x /usr/local/bin/uds
+sudo curl -sL https://github.com/defenseunicorns/uds-cli/releases/download/v0.14.0/uds-cli_v0.14.0_Linux_amd64 -o /usr/local/bin/uds && sudo chmod +x /usr/local/bin/uds
 sudo chmod +x /usr/local/bin/uds
 newgrp docker <<EONG
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
